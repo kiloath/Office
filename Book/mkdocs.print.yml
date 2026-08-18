@@ -1,0 +1,9 @@
+INHERIT: mkdocs.yml
+plugins:
+  - search
+  - print-site:
+      add_cover_page: true
+      cover_page_template: "docs/assets/templates/custom_cover_page.tpl"
+nav:
+  - index.md
+  - 列印: print_page/

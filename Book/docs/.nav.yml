@@ -1,0 +1,14 @@
+flatten_single_child_sections: true
+
+nav:
+  - index.md
+  - 幫助: help
+  - 現行規格:
+      - glob: "openspec/specs/*"
+        ignore_no_matches: true
+  - 歷史決策:
+      - glob: "openspec/changes/archive/*"
+        ignore_no_matches: true
+  - 變更提案:
+      - glob: "openspec/changes/*"
+        ignore_no_matches: true
