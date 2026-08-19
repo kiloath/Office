@@ -1,7 +1,6 @@
 flatten_single_child_sections: true
 
 nav:
-  - index.md
   - 幫助: help
   - 現行規格:
       - glob: "openspec/specs/*"

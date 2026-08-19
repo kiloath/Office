@@ -2,99 +2,31 @@ schema: spec-driven
 
 context: |
   ## 專案目的
+  
+  ## 環境與共用規則
+  - 動手前先讀根目錄 `AGENTS.md`（shell、node/fnm、pnpm、uv、回覆語言）。
 
-  這個專案是一個展示櫃：OpenSpec 的產出物是主角，MkDocs Material 是呈現它的載體。
-  openspec/ 目錄透過 junction 掛在 Book/docs/openspec，所以你寫的每一個 artifact
-  同時就是文件站上的一頁，會被同事直接閱讀，也會被 pagefind 全文索引。
-  這代表 artifact 的 Markdown 品質等於站台門面，格式規則不是龜毛而是功能需求。
-  archive 也是刻意公開的：歷史決策要能被搜到。
+  ## 程式分析
+  - 如果在分析的過程裡需要我提供更多的資料請明說不要用猜的，例如需要LOG檔,程式碼,組態檔,圖檔等。
 
-  ## 導覽已經一次定案，不要改
+  ## 目錄架構
 
-  Book/docs/.nav.yml 用 glob 對準 OpenSpec 固定不變的三個路徑
-  （openspec/specs/*、openspec/changes/*、openspec/changes/archive/*），
-  新的 change、capability、archive 全部自動上架。
-  除非變更本身就是以導覽為標的，否則不要修改 .nav.yml；任何情況下都不要在 openspec/ 底下
-  新增 .nav.yml。導覽的維護成本已經被設計掉了，任何「順手調整」都是在把它加回來。
-
-  change 內部的 artifact 是字母序（Design、Proposal、規格、Tasks），這是已知且接受的。
-  不要用 YAML front matter 去調整順序：main spec 裡的 front matter 會被 archive 的
-  合併邏輯判定為無法辨識的內容而警告刪除。
-
-  ## 環境
-
-  - Windows 11 + PowerShell 7 (pwsh)，無管理員權限。腳本一律 pwsh 語法，不要摻 bash 或 cmd。
-  - Python 由 uv 管理（3.14）。所有 mkdocs 指令都用 `uv run`，不要直接呼叫 pip 或 python。
-  - 相依只加在 pyproject.toml 的 dev group，用 `uv add --dev`；不要手改 uv.lock。
-  - Node 工具由 fnm 管理，pagefind 以 `pnpm dlx pagefind` 執行。
-    本專案不是 Node 專案，不要新增 package.json 或 node_modules。
-  - 上述工具若不存在，回報使用者處理，不要自行安裝。
-
-  ## 目錄與建置
-
-  - Book/ 是 mkdocs 專案根。mkdocs.yml 是唯一的共用設定來源，
-    mkdocs.prod.yml 用 INHERIT 繼承它、只放正式站專屬差異。共用設定一律改 mkdocs.yml。
-  - mkdocs.print.yml 由使用者按當次列印需求手動調整，沒有規律。不要修改它，也不要對它立規則。
-  - Scripts/ 放 PowerShell 腳本，由 .vscode/tasks.json 呼叫。
-  - Book/docs/openspec 是 openspec_junction.ps1 建立的 junction，已被 .gitignore。
-    不要手動建立、修改或刪除它。
+  - **動手改任何檔案前，先讀 `Book/docs/help/folders.md`。**
+    那一頁是目錄架構與操作權限的唯一來源：各目錄放什麼、哪些禁止操作、
+    以及目前還沒有結論的待確認事項。這裡刻意不重複，避免兩邊走鐘。
+  - 有一部分目錄是使用者手動維護、禁止操作也不需要檢查的。
+    清單在那一頁，**不要憑記憶或憑目錄名稱判斷**。
+  - 我可能啟用多種 AI Agent（`.agent`、`.agents`、`.claude`、`.devin`），
+    請在建立 SKILL 時要同步，不要單獨改其中一份。
 
   ## 撰寫慣例
 
-  - 一律繁體中文，技術名詞保留英文原文。
   - 只使用 mkdocs.yml 已啟用的 Markdown 擴充：mermaid（superfences）、KaTeX（arithmatex，$$）、
     admonition、details、tasklist、tabbed、footnotes、def_list、abbr、attr_list、md_in_html、tables。
     未啟用的語法（snippets、critic 等）不要用。
-  - toc_depth 是 3，所以 spec 的 #### Scenario 不會進右側目錄。這是刻意的：
-    requirement 層級才是讀者要的鳥瞰粒度。不要為此調整 toc_depth 或改動 scenario 的標題層級。
-
-  ## 驗收
-
-  沒有測試框架，沒有 CI。驗收方式是在 Book/ 底下執行
-  `uv run mkdocs build -f mkdocs.prod.yml`，不得新增 mkdocs 或 awesome-nav 的
-  WARNING 與 ERROR。Material 團隊那面關於 MkDocs 2.0 的紅色宣傳橫幅每次都會出現，不列入計算。
-
-  ## 這個專案什麼算行為變更
-
-  - 站台機制（導覽、檢索、渲染、列印、junction、建置流程）→ 有 spec
-  - 純文件內容（help/ 的文案、typo、補充說明）→ 在 .openspec.yaml 設 skip_specs: true
-
-  不要為了讓 openspec validate 通過而編造 requirement。
+  - markdown 文件，圖檔請依.vscode/settings.json 裡的設定儲存。
 
   ## 版控
 
-  .gitignore 排除所有第一層 dot 開頭目錄，這類目錄要進版控必須加 -f
-  （例如 `git add .claude -f`）。site/ 與 Book/docs/openspec/ 不進版控。
-
-rules:
-  proposal:
-    - 開頭必須有唯一一個繁體中文 H1，且該 H1 要能直接當成導覽與頁面標題
-    - 明確標出這次是站台機制變更還是純文件內容變更，因為它決定要不要設 skip_specs
-    - 必須有「不做什麼」一節，避免範圍擴散到整個文件站
-  specs:
-    - 開頭必須有唯一一個繁體中文 H1
-    - Scenario 必須使用剛好四個井號（####）；用三個或改成 bullet 會被 parser 靜默忽略
-    - 需求寫成可驗證的站台行為：頁面路徑、導覽位置、標題、檔名
-    - 需要圖時用 mermaid fence，不要外部圖片連結
-    - 不要加 YAML front matter
-  design:
-    - 開頭必須有唯一一個繁體中文 H1
-    - 純文件內容變更就跳過這個 artifact 並說明原因
-    - 有設定變更時要交代 mkdocs.yml 與 mkdocs.prod.yml 各自受什麼影響（print 不必交代）
-  tasks:
-    - 開頭必須有唯一一個繁體中文 H1
-    - 每個任務都要寫出驗收方式：要跑哪個指令，或要看站上哪一頁
-    - 檔案路徑用 repo 相對路徑（例如 Book/docs/help/index.md）
-
-operations:
-  apply:
-    guidance:
-      - 動過 Book/ 底下任何檔案後，在 Book/ 執行 uv run mkdocs build -f mkdocs.prod.yml，確認沒有新增的 WARNING 或 ERROR 才算完成
-      - 不要修改 Book/docs/openspec 與 mkdocs.print.yml
-      - 除非變更本身就是以導覽為標的，否則不要修改 .nav.yml
-      - 標題層級不要跳級，只用已啟用的 Markdown 擴充
-  archive:
-    guidance:
-      - 建立或更新 main spec 時直接寫入繁體中文 H1，因為 main spec 是站上的一頁。若歸檔是走 CLI 的 openspec archive，它會寫入英文 H1（# <name> Specification），那條路徑要在事後改成繁體中文
-      - 確認 main spec 的 ## Purpose 不是 TBD 佔位字串，那行會直接印在站上
-      - 提醒使用者 dot 開頭目錄需要 git add -f 才進得了版控
+  - 不需要去 commit 或 push。
+  - 切換支線失敗時請使用者處理。

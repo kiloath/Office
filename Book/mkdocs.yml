@@ -1,7 +1,6 @@
 site_name: Book
 theme:
   name: material
-  custom_dir: overrides
   favicon: assets/images/logo.png
   logo: assets/images/logo.png
   features:

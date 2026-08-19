@@ -1,2 +1,5 @@
 nav:
+  - markdown.md
   - "*"
+  - folders.md
+  - about.md
