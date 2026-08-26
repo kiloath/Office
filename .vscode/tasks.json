@@ -1,0 +1,97 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "openspec: junction",
+      "detail": "建立 Book/docs/openspec -> openspec 的 junction（冪等）",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/Scripts/openspec_junction.ps1'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared",
+        "focus": false,
+        "clear": true,
+        "close": true
+      }
+    },
+    {
+      "label": "mkdocs: livereload",
+      "detail": "http://127.0.0.1:8000",
+      "type": "process",
+      "command": "uv",
+      "args": [
+        "run",
+        "mkdocs",
+        "serve",
+        "-f",
+        "${workspaceFolder}/Book/mkdocs.yml",
+        "--livereload"
+      ],
+      "dependsOn": ["openspec: junction"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "mkdocs: pagefind",
+      "detail": "http://localhost:1414",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/Scripts/mkdocs_pagefind.ps1'",
+      "dependsOn": ["openspec: junction"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "mkdocs: print",
+      "detail": "http://127.0.0.1:8001",
+      "type": "process",
+      "command": "uv",
+      "args": [
+        "run",
+        "mkdocs",
+        "serve",
+        "-f",
+        "${workspaceFolder}/Book/mkdocs.print.yml",
+        "--dev-addr",
+        "127.0.0.1:8001",
+        "--livereload"
+      ],
+      "dependsOn": ["openspec: junction"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    }
+  ]
+}
