@@ -38,6 +38,15 @@
     corepack enable
     corepack prepare pnpm@latest --activate
     ```
+- OpenSpec
+    ```
+    npm install -g @fission-ai/openspec@latest
+    ```
+## 啟程
+- 初始
+    ```
+    openspec init
+    ```
 
 ## Visual Studio Code
 - "task.allowAutomaticTasks": "on"
