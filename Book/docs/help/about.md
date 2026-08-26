@@ -7,7 +7,8 @@
 - 支援 PageFind，讓您不會再找不到資料了。
 
 ## 環境
-初學者建議用以下方式安裝
+建議安裝方式
+
 - PowerShell
     ```
     winget install -e --id Microsoft.PowerShell --source winget
@@ -19,6 +20,8 @@
 - Visual Studio Code
     ```
     winget install -e --id Microsoft.VisualStudioCode --source winget
+    code --install-extension anthropic.claude-code
+    code --install-extension openai.chatgpt
     ```
 - Python:
     ```
