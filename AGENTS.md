@@ -1,8 +1,16 @@
 # 職能手冊
 
 - 以繁體中文回覆，技術名詞保留英文原文。
-- 以下軟體如果找不到，不要安裝，通知使用者處理。
-- 若 Codex 沙箱無法存取或執行 WindowsApps、WinGet Links 或 WinGet Packages 中的既有程式，可申請提升權限後重試；此授權不包含自行安裝、重裝或升級軟體。
+- Windows system/global 軟體如果找不到，不要安裝，通知使用者處理。
+- 若 Codex 沙箱無法存取或執行 WindowsApps、WinGet Links 或 WinGet Packages 中的既有程式，可申請提升權限後重試；此授權不包含自行安裝、重裝或升級 Windows system/global 軟體。
+
+## dependency 安裝
+
+- 允許安裝目前任務需要的 Python dependency，但只能安裝至專案 `.venv`，或 uv 建立的隔離環境／cache；不得修改 system Python。
+- 允許安裝目前任務需要的 Node.js dependency，但 Node.js 必須由 fnm 管理；不得修改 system Node.js。
+- 不得為 dependency 安裝修改 Windows PATH，或使用 WinGet、MSI 等 system installer。
+- 安裝目標不明確時先停止並詢問使用者。
+- 完成後須回報安裝的 dependency 及其隔離環境。
 
 ## shell
 
@@ -19,10 +27,3 @@
   $fnmPath = Join-Path $env:LOCALAPPDATA 'Microsoft\WinGet\Links\fnm.exe'
   & $fnmPath env --use-on-cd --shell powershell | Out-String | Invoke-Expression
   ```
-
-## Python 環境
-- Python 用 uv。
-
-## 目錄架構與操作權限
-
-- 動手改任何檔案前，先讀 `Book/docs/help/folders.md` —— 那是唯一來源。
