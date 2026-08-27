@@ -45,12 +45,13 @@ Office2/
 ├── CLAUDE.md                指向 AGENTS.md。規則實際住在 openspec/config.yaml 與 AGENTS.md，不需要處理
 ├── pyproject.toml           mkdocs 工具鏈依賴
 ├── uv.lock
-└── .venv/                   ⛔ .gitignore 已排除
+└── .venv/                   🔧 .gitignore 已排除；只由 Python dependency manager 操作
 ```
 
 **圖例**（兩張樹狀圖共用）
 
 ⛔ = 禁止操作，也不需要檢查　　✅ = AI 需要編寫與執行
+🔧 = 只能透過指定的 dependency manager 操作
 🙋 = 使用者維護，AI 只讀不寫　　🚫 = 連讀都不要主動讀
 
 ## 禁止操作的清單
@@ -67,7 +68,15 @@ Office2/
 | `Book/docs/openspec/` | junction，改它等於改 `openspec/` |
 | `Scripts/` **第一層的檔案** | 由 `.vscode/tasks.json` 呼叫。禁改的是**檔案**，不含子目錄 `uiautomation/` |
 | `Supporting/` | 只供參考的證據，不要修改 |
-| `.venv/` | 環境 |
+
+## 受限操作的環境
+
+| 對象 | 允許操作 | 禁止操作 |
+|---|---|---|
+| `.venv/` | 允許 uv 或 pip 為目前任務建立 virtual environment、安裝及管理 Python dependency | 不直接手改其中檔案、不放入 Git、不修改 system Python |
+| fnm 管理的 Node.js 環境 | 允許安裝目前任務需要的 Node.js dependency | 不修改 system Node.js、Windows PATH，或使用 system installer |
+
+dependency 安裝完成後，AI 必須回報安裝內容與所在的隔離環境；安裝目標不明確時先詢問使用者。
 
 ## 各目錄放什麼
 
@@ -139,6 +148,7 @@ openspec/  ──── junction ────▶  Book/docs/openspec/
 | 2026-08-20 | 兄弟目錄 `Office/` 與 root `CLAUDE.md` 怎麼看待？ | `Office/` 是遺產，**不要主動查看或引用**，只有使用者明確要求時才去讀。root `CLAUDE.md` 是空檔，規則住在 `openspec/config.yaml` 與本頁，不需要處理 | 上層：KingCon 專案家族 |
 | 2026-08-20 | 「`Scripts/` 第一層」指檔案還是目錄？ | 指**檔案**。子目錄 `uiautomation/` 不在禁改範圍，那裡要編寫與執行 | 禁止操作的清單 |
 | 2026-08-20 | `MEETINGS/` 還要嗎？ | 要。會議紀錄檔名 `YYYY-MM-DD.md`，首篇為 `2026-08-20.md` | 各目錄放什麼 |
+| 2026-08-27 | AI 可以安裝 dependency 嗎？ | 可以，但 Python 只能使用專案 `.venv` 或 uv 隔離環境／cache，Node.js 必須由 fnm 管理；禁止 system/global 安裝 | 受限操作的環境、`AGENTS.md` |
 
 ## 待確認
 
