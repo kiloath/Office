@@ -75,7 +75,7 @@
         "mkdocs",
         "serve",
         "-f",
-        "${workspaceFolder}/Book/print/mkdocs.print.yml",
+        "${workspaceFolder}/Book/mkdocs.print.yml",
         "--dev-addr",
         "127.0.0.1:8001",
         "--livereload"
