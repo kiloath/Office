@@ -33,3 +33,6 @@
   $fnmPath = Join-Path $env:LOCALAPPDATA 'Microsoft\WinGet\Links\fnm.exe'
   & $fnmPath env --use-on-cd --shell powershell | Out-String | Invoke-Expression
   ```
+
+## UI 自動化測試
+- 請以寫成腳本的方式執行測試。
