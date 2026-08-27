@@ -11,6 +11,9 @@
 ## 已安裝的工具
 - ripgrep: `winget install BurntSushi.ripgrep.MSVC`
 
+## Python 環境
+- Python 用 uv。
+
 ## dependency 安裝
 
 - 允許安裝目前任務需要的 Python dependency，但只能安裝至專案 `.venv`，或 uv 建立的隔離環境／cache；不得修改 system Python。
