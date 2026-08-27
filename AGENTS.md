@@ -12,6 +12,14 @@
 - 安裝目標不明確時先停止並詢問使用者。
 - 完成後須回報安裝的 dependency 及其隔離環境。
 
+## Python script dependency 風格
+
+- 可獨立執行、具有專屬 dependency 的 Python script，優先使用 PEP 723 inline script metadata，並以 `uv run <script>` 執行。
+- `Scripts/uiautomation/` 的 executable entry point 採用 PEP 723；被 import 的內部 modules 不重複宣告 metadata。
+- UI automation 等需要可重現環境的 script，其 direct dependency 應固定版本。
+- 多個程式共用的 dependency、Python package 或正式 application dependency，仍應放在 `pyproject.toml`，不使用 PEP 723。
+- 不得在 PEP 723 與 `pyproject.toml` 重複宣告同一用途的 dependency，除非文件明確說明原因。
+
 ## shell
 
 - 主 shell 是 PowerShell 7 (pwsh)，‵%localappdata%\Microsoft\WindowsApps\pwsh.exe‵。
