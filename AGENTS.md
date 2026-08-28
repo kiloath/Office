@@ -16,14 +16,12 @@
 - Python 環境與 dependency 統一使用 `uv` 管理；允許執行任務所需的 `uv` 指令。
 - 不得使用 `uv pip install --system` 或以其他方式修改 system Python。
 - 獨立 script 優先使用 PEP 723，正式專案或共用 dependency 使用 `pyproject.toml`。
-- 完成後回報新增的 dependency 與安裝位置。
 
 ## dependency 安裝
 
 - 允許安裝目前任務需要的 Node.js dependency，但 Node.js 必須由 fnm 管理；不得修改 system Node.js。
 - 不得為 dependency 安裝修改 Windows PATH，或使用 WinGet、MSI 等 system installer。
 - 安裝目標不明確時先停止並詢問使用者。
-- 完成後須回報安裝的 dependency 及其隔離環境。
 
 ## Node.js 環境
 
@@ -35,4 +33,4 @@
   ```
 
 ## UI 自動化測試
-- 請以寫成腳本的方式執行測試。
+- 請以寫成腳本的方式執行測試, 不要使用`computer-use`。
