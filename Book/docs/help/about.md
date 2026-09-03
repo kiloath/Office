@@ -11,7 +11,7 @@
 
 - PowerShell
     ```
-    winget install -e --id Microsoft.PowerShell --source winget
+    winget install -e --id Microsoft.PowerShell --source winget --installer-type wix
     ```
 - Git:
     ```
@@ -31,12 +31,11 @@
     ```
 - Nodejs:
     ```
-    winget install -e --id Schniz.fnm --source winget
-    fnm install --lts
-    fnm default lts-latest
+    winget install -e --id OpenJS.NodeJS
+    node --version
     npm install -g npm@latest
-    corepack enable
-    corepack prepare pnpm@latest --activate
+    corepack install -g pnpm@latest
+    pnpm --version
     ```
 - OpenSpec
     ```
